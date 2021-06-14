@@ -8,8 +8,13 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.mtgcollection.MySingleton;
 import com.example.mtgcollection.R;
 
+import org.json.JSONArray;
 
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -24,10 +29,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         registerBtn = findViewById(R.id.registerBtn);
         registerBtn.setOnClickListener(this);
     }
-
     public void onClick(View v){
-        Intent toRegister = new Intent(this, RegisterActivity.class);
-        startActivity(toRegister);
+        String LogninUrl = "dfa";
 
+        if(v == registerBtn) {
+            Intent toRegister = new Intent(this, RegisterActivity.class);
+            startActivity(toRegister);
+        }else {
+
+        }
     }
+
 }
