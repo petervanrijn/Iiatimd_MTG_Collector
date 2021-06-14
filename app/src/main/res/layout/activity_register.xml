@@ -42,6 +42,9 @@
         android:inputType="textPersonName"
         android:padding="5dp"
         android:textColor="@color/white"
+        android:drawableLeft="@drawable/ic_account_icon"
+        android:drawableTint="@color/white"
+        android:drawablePadding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,7 +71,10 @@
         android:inputType="textPersonName"
         android:padding="5dp"
         android:textColor="@color/white"
+        android:drawableLeft="@drawable/ic_account_icon"
+        android:drawableTint="@color/white"
         android:layout_marginTop="5dp"
+        android:drawablePadding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
@@ -93,11 +99,16 @@
         android:ems="10"
         android:inputType="textEmailAddress"
         android:background="@drawable/custom_input"
+        android:textColor="@color/white"
         android:padding="5dp"
         android:layout_marginTop="5dp"
+        android:drawableLeft="@drawable/ic_email_icon"
+        android:drawableTint="@color/white"
+        android:drawablePadding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email" />
+        app:layout_constraintTop_toBottomOf="@+id/email"
+        android:drawableStart="@drawable/ic_email_icon" />
 
     <TextView
         android:id="@+id/password"
@@ -118,12 +129,17 @@
         android:background="@drawable/custom_input"
         android:ems="10"
         android:inputType="textPassword"
+        android:textColor="@color/white"
         android:padding="5dp"
         android:layout_marginTop="5dp"
+        android:drawableLeft="@drawable/ic_password_icon"
+        android:drawableTint="@color/white"
+        android:drawablePadding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
+        app:layout_constraintTop_toBottomOf="@+id/password"
+        android:drawableStart="@drawable/ic_password_icon" />
 
     <TextView
         android:id="@+id/repeatPassword"
@@ -146,12 +162,17 @@
         android:ems="10"
         android:inputType="textPassword"
         android:padding="5dp"
+        android:textColor="@color/white"
+        android:drawableLeft="@drawable/ic_password_icon"
+        android:drawableTint="@color/white"
+        android:drawablePadding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/repeatPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/repeatPassword"
+        android:drawableStart="@drawable/ic_password_icon" />
 
     <android.widget.Button
-        android:id="@+id/button"
+        android:id="@+id/register"
         android:layout_width="268dp"
         android:layout_height="wrap_content"
         android:background="@drawable/primary_btn"
@@ -163,5 +184,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/repeatPasswordField"
         app:layout_constraintVertical_bias="0.0" />
+
+    <ImageButton
+        android:id="@+id/backButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/magicTheGathering"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.071"
+        app:srcCompat="@drawable/ic_backbutton_icon"
+        app:tint="@drawable/button_text_color"
+        android:contentDescription="Back to Login" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
