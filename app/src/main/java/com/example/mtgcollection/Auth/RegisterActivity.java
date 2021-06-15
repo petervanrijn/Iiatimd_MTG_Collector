@@ -12,11 +12,20 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.example.mtgcollection.MySingleton;
 import com.example.mtgcollection.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
     Button register;
@@ -54,7 +63,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         conPassword = ConPassword.getText().toString();
         if (v == register){
             if(name.equals("")||email.equals("")||username.equals("")||password.equals("")||conPassword.equals("")){
-                Log.d("reg" , "doet het");
                 builder.setTitle("Something went wrong!!!");
                 builder.setMessage("You need to fill all fields.");
                 displayAlert("Input_error");
@@ -66,16 +74,35 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, REG_URL, new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
+                        try {
+                            JSONArray jsonArray= new JSONArray(response);
+                            JSONObject jsonObject = jsonArray.getJSONObject(0);
+                            String code = jsonObject.getString("code");
+                            String message = jsonObject.getString("message");
+                            builder.setTitle("Server response");
+                            builder.setMessage(message);
+                            displayAlert(code);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
                     }
-                });
-
-                finishActivity(200);
+                }){
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("name", name);
+                        params.put("email", email);
+                        params.put("username", username);
+                        params.put("password", password);
+                        return params;
+                    }
+                };
+                MySingleton.getInstance(RegisterActivity.this).addToRequestQueue(stringRequest);
             }
         }else{
             finish();
@@ -87,9 +114,21 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (code.equals("Input_error")){
-                    Password.setText("");
-                    ConPassword.setText("");
+                switch (code) {
+                    case "Input_error":
+                        Password.setText("");
+                        ConPassword.setText("");
+                        break;
+                    case "reg_succes":
+                        finish();
+                        break;
+                    case "reg_failed":
+                        Name.setText("");
+                        Email.setText("");
+                        Username.setText("");
+                        Password.setText("");
+                        ConPassword.setText("");
+                        break;
                 }
             }
         });
