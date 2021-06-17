@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.example.mtgcollection.Auth.RegisterActivity;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,6 +29,7 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
     Button getCard;
     TextView cardName;
+    ImageView cardImg;
     String URL = "http://10.0.2.2:8000/api/card";
 
 
@@ -36,12 +39,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         cardName = findViewById(R.id.CardName);
+        cardImg = findViewById(R.id.CardImg);
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, response -> {
             try {
                 JSONArray jsonArray = new JSONArray(response);
                 JSONObject jsonObject = jsonArray.getJSONObject(0);
                 String name = jsonObject.getString("image");
+                Picasso.get().load("https://c1.scryfall.com/file/scryfall-cards/large/front/8/a/8a4e7ef7-7958-4d7c-b319-4d3db7955002.jpg?1576383697").into(cardImg);
                 cardName.setText(name);
             } catch (JSONException e) {
                 e.printStackTrace();
