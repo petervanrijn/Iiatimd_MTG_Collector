@@ -112,8 +112,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-
-
     private void displayAlert(final String code) {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
