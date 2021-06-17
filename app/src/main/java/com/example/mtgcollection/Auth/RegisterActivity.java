@@ -1,6 +1,7 @@
 package com.example.mtgcollection.Auth;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.example.mtgcollection.MainActivity;
 import com.example.mtgcollection.MySingleton;
 import com.example.mtgcollection.R;
 
@@ -33,7 +35,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     EditText Username, Name, Email, Password, ConPassword;
     String username, name, email, password, conPassword;
     AlertDialog.Builder builder;
-    String REG_URL = "http://127.0.0.1:8000/api/register";
+    // de URL moet 10.0.2.2 voor een request als de server op de pc staat
+    String REG_URL = "http://10.0.2.2:8000/api/register";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,31 +68,30 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             if(name.equals("")||email.equals("")||username.equals("")||password.equals("")||conPassword.equals("")){
                 builder.setTitle("Something went wrong!!!");
                 builder.setMessage("You need to fill all fields.");
-                displayAlert("Input_error");
+                builder.show();
             }else if(!(password.equals(conPassword))){
                 builder.setTitle("Something went wrong!!!");
                 builder.setMessage("Password is not the same.");
                 displayAlert("ConPassword_error");
             }else{
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, REG_URL, new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONArray jsonArray= new JSONArray(response);
-                            JSONObject jsonObject = jsonArray.getJSONObject(0);
-                            String code = jsonObject.getString("code");
-                            String message = jsonObject.getString("message");
-                            builder.setTitle("Server response");
-                            builder.setMessage(message);
+                // vanaf diet doet de request het niet van weegen een error
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, REG_URL, response -> {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        String code = jsonObject.getString("code");
+                        boolean token = jsonObject.has("token");
+                        if (token) {
+                            builder.setTitle("success!!!");
+                            builder.setMessage("registration  in now complete");
                             displayAlert(code);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        displayAlert("reg_failed");
                     }
                 }){
                     @Override
@@ -99,6 +101,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         params.put("email", email);
                         params.put("username", username);
                         params.put("password", password);
+                        params.put("password_confirmation", conPassword);
                         return params;
                     }
                 };
@@ -109,18 +112,21 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
     }
 
-    private void displayAlert(final String code) {
 
+
+    private void displayAlert(final String code) {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 switch (code) {
-                    case "Input_error":
+                    case "ConPassword_error":
                         Password.setText("");
                         ConPassword.setText("");
                         break;
-                    case "reg_succes":
+                    case "reg_success":
+                        Intent i = new Intent(RegisterActivity.this, MainActivity.class);
                         finish();
+                        startActivity(i);
                         break;
                     case "reg_failed":
                         Name.setText("");
