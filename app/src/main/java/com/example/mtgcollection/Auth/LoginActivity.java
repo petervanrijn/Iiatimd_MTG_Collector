@@ -28,14 +28,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         setContentView(R.layout.activity_login);
         registerBtn = findViewById(R.id.registerBtn);
         registerBtn.setOnClickListener(this);
+        loginBtn.setOnClickListener(this);
+
     }
     public void onClick(View v){
-        String LogninUrl = "dfa";
+        String LogninUrl = "http://10.0.2.2:8000/api/login";
 
         if(v == registerBtn) {
             Intent toRegister = new Intent(this, RegisterActivity.class);
             startActivity(toRegister);
-        }else {
+        }else if( v == loginBtn) {
 
         }
     }
