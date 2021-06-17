@@ -45,8 +45,9 @@ public class MainActivity extends AppCompatActivity {
             try {
                 JSONArray jsonArray = new JSONArray(response);
                 JSONObject jsonObject = jsonArray.getJSONObject(0);
-                String name = jsonObject.getString("image");
-                Picasso.get().load("https://c1.scryfall.com/file/scryfall-cards/large/front/8/a/8a4e7ef7-7958-4d7c-b319-4d3db7955002.jpg?1576383697").into(cardImg);
+                String name = jsonObject.getString("name");
+                String image = jsonObject.getString("image");
+                Picasso.get().load(image).into(cardImg);
                 cardName.setText(name);
             } catch (JSONException e) {
                 e.printStackTrace();
