@@ -36,7 +36,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     String username, name, email, password, conPassword;
     AlertDialog.Builder builder;
     // de URL moet 10.0.2.2 voor een request als de server op de pc staat
-    String REG_URL = "http://10.0.2.2:8000/api/register";
+    String REG_URL = "http://10.0.2.2:8001/api/register";
+    String sanctum_token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +53,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         Password = findViewById(R.id.passwordField);
         ConPassword = findViewById(R.id.repeatPasswordField);
         builder = new AlertDialog.Builder(RegisterActivity.this);
-
         backBtn.setOnClickListener(this);
         register.setOnClickListener(this);
     }
@@ -65,52 +65,57 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         password = Password.getText().toString();
         conPassword = ConPassword.getText().toString();
         if (v == register){
-            if(name.equals("")||email.equals("")||username.equals("")||password.equals("")||conPassword.equals("")){
-                builder.setTitle("Something went wrong!!!");
-                builder.setMessage("You need to fill all fields.");
-                builder.show();
-            }else if(!(password.equals(conPassword))){
-                builder.setTitle("Something went wrong!!!");
-                builder.setMessage("Password is not the same.");
-                displayAlert("ConPassword_error");
-            }else{
-                // vanaf diet doet de request het niet van weegen een error
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, REG_URL, response -> {
-                    try {
-                        JSONObject jsonObject = new JSONObject(response);
-                        String code = jsonObject.getString("code");
-                        boolean token = jsonObject.has("token");
-                        if (token) {
-                            builder.setTitle("success!!!");
-                            builder.setMessage("registration  in now complete");
-                            displayAlert(code);
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        displayAlert("reg_failed");
-                    }
-                }){
-                    @Override
-                    protected Map<String, String> getParams() throws AuthFailureError {
-                        Map<String, String> params = new HashMap<String, String>();
-                        params.put("name", name);
-                        params.put("email", email);
-                        params.put("username", username);
-                        params.put("password", password);
-                        params.put("password_confirmation", conPassword);
-                        return params;
-                    }
-                };
-                MySingleton.getInstance(RegisterActivity.this).addToRequestQueue(stringRequest);
-            }
+            registration();
         }else{
             finish();
         }
     }
+
+    private void registration(){
+        if(name.equals("")||email.equals("")||username.equals("")||password.equals("")||conPassword.equals("")){
+            builder.setTitle("Something went wrong!!!");
+            builder.setMessage("You need to fill all fields.");
+            builder.show();
+        }else if(!(password.equals(conPassword))){
+            builder.setTitle("Something went wrong!!!");
+            builder.setMessage("Password is not the same.");
+            displayAlert("ConPassword_error");
+        }else{
+            // vanaf diet doet de request het niet van weegen een error
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, REG_URL, response -> {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String code = jsonObject.getString("code");
+                    sanctum_token = jsonObject.getString("token");
+                    boolean token = jsonObject.has("token");
+                    if (token) {
+                        builder.setTitle("success!!!");
+                        builder.setMessage("registration  in now complete");
+                        displayAlert(code);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    displayAlert("reg_failed");
+                }
+            }){
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("name", name);
+                    params.put("email", email);
+                    params.put("username", username);
+                    params.put("password", password);
+                    params.put("password_confirmation", conPassword);
+                    return params;
+                }
+            };
+            MySingleton.getInstance(RegisterActivity.this).addToRequestQueue(stringRequest);
+        }
+    };
 
     private void displayAlert(final String code) {
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -123,6 +128,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         break;
                     case "reg_success":
                         Intent i = new Intent(RegisterActivity.this, MainActivity.class);
+                        i.putExtra("TOKEN", sanctum_token);
                         finish();
                         startActivity(i);
                         break;
