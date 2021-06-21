@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     Button getCard;
     ImageView cardImg;
     TextView cardName;
-    String URL = "http://10.0.2.2:8001/api/card";
+    String URL = "http://10.0.2.2:8000/api/card";
 
 
     @Override
@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
                 String image = jsonObject.getString("image");
                 Picasso.get().load(image).into(cardImg);
                 cardName.setText(name);
-                Log.d("errorr", response);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
