@@ -1,7 +1,10 @@
 package com.example.mtgcollection.Auth;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -29,6 +32,7 @@ import com.example.mtgcollection.URLs;
 import com.example.mtgcollection.data.SharedPrefManager;
 import com.example.mtgcollection.data.User;
 import com.google.gson.JsonNull;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,19 +45,13 @@ public class RegisterActivity extends AppCompatActivity {
     Button register;
     ImageButton backBtn;
     EditText Username, Name, Email, Password, ConPassword;
-    String sanctum_token;
-    AlertDialog.Builder builder;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
-        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
-            finish();
-            startActivity(new Intent(this, MainActivity.class));
-            return;
-        }
+        progressBar = findViewById(R.id.progressBar);
 //        buttons
         backBtn =  findViewById(R.id.backButton);
         register = findViewById(R.id.register);
@@ -63,7 +61,7 @@ public class RegisterActivity extends AppCompatActivity {
         Email = findViewById(R.id.emailField);
         Password = findViewById(R.id.passwordField);
         ConPassword = findViewById(R.id.repeatPasswordField);
-        builder = new AlertDialog.Builder(RegisterActivity.this);
+
         findViewById(R.id.register).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,34 +103,58 @@ public class RegisterActivity extends AppCompatActivity {
         }
         if (!password.equals(conPassword)){
             ConPassword.setError("Enter the same password please.");
+            Password.requestFocus();
             ConPassword.requestFocus();
             return;
         } else{
             StringRequest stringRequest = new StringRequest(Request.Method.POST, URLs.URL_REGISTER, response -> {
+                progressBar.setVisibility(View.GONE);
                 try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    sanctum_token = jsonObject.getString("token");
+                    JSONObject obj = new JSONObject(response);
+
+                    //no error in response
+                    if (obj.getString("code").equals("reg_success")){
+                        Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
+                        //get the user from the response
+                        JSONObject userJson = obj.getJSONObject("user");
+                        //create a new user object
+                        //mss token ook toevoegen in de user
+                        User user = new User(
+                                userJson.getInt("id"),
+                                userJson.getString("name"),
+                                userJson.getString("email"),
+                                userJson.getString("token")
+                        );
+                        Log.d("user", String.valueOf(user));
+
+                        //storing the user and token in shared preference
+                        SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
+
+                        //starting the profile
                         Toast.makeText(RegisterActivity.this, "Registration complete", Toast.LENGTH_LONG).show();
                         Intent i = new Intent(RegisterActivity.this, MainActivity.class);
-                        i.putExtra("TOKEN", sanctum_token);
                         finish();
                         startActivity(i);
+                    }else{
+                        Toast.makeText(this,"email is already used", Toast.LENGTH_LONG).show();
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }, error -> {
                     // error handler
             }){
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<String, String>();
-                    params.put("name", name);
-                    params.put("email", email);
-                    params.put("username", username);
-                    params.put("password", password);
-                    params.put("password_confirmation", conPassword);
-                    return params;
-                }
+                    @Override
+                    protected Map<String, String> getParams () throws AuthFailureError {
+                        Map<String, String> params = new HashMap<String, String>();
+                        params.put("name", name);
+                        params.put("email", email);
+                        params.put("username", username);
+                        params.put("password", password);
+                        params.put("password_confirmation", conPassword);
+                        return params;
+                    }
+
             };
             MySingleton.getInstance(RegisterActivity.this).addToRequestQueue(stringRequest);
         }
