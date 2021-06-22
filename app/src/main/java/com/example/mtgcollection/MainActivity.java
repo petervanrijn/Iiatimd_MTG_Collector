@@ -1,11 +1,9 @@
 package com.example.mtgcollection;
 
-import android.content.SharedPreferences;
+
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,11 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.example.mtgcollection.Auth.RegisterActivity;
 import com.example.mtgcollection.data.SharedPrefManager;
 import com.example.mtgcollection.data.User;
 import com.squareup.picasso.Picasso;
@@ -31,7 +25,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-    Button getCard;
     ImageView cardImg;
     TextView cardName;
     Button logOutBtn;
