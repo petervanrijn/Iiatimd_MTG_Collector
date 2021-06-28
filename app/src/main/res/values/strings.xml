@@ -7,5 +7,6 @@
     <string name="email_adress">Email adress</string>
     <string name="password">Password</string>
     <string name="repeat_password">Repeat password</string>
+    <string name="back_to_login">Back to Login</string>
     <!-- Strings related to login -->
 </resources>
