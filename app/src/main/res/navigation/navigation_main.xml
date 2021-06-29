@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_main"
-    app:startDestination="@id/testDestinationHome">
+    app:startDestination="@id/destinationProfile">
 
     <fragment
-        android:id="@+id/testDestinationHome"
-        android:name="com.example.mtgcollection.fragments.TestDestinationHome"
-        android:label="fragment_test_destination_home"
-        tools:layout="@layout/fragment_test_destination_home" />
+        android:id="@+id/destinationProfile"
+        android:name="com.example.mtgcollection.fragments.Profile"
+        android:label="destination_profile"
+        tools:layout="@layout/profile_page" />
     <fragment
         android:id="@+id/testDestinationFriends"
         android:name="com.example.mtgcollection.fragments.TestDestinationFriends"
