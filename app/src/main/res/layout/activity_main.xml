@@ -27,24 +27,27 @@
         android:text="@string/my_name"
         android:textColor="@color/white"
         android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="308dp" />
+        app:layout_constraintTop_toBottomOf="@+id/my_profile"
+        app:layout_constraintVertical_bias="0.389" />
 
     <TextView
         android:id="@+id/my_user"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
         android:text="@string/my_user"
         android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/AllCards"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/my_name" />
+        app:layout_constraintTop_toBottomOf="@+id/my_name"
+        app:layout_constraintVertical_bias="0.491" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/AllCards"
         android:layout_width="110dp"
         android:layout_height="150dp"
         app:cardBackgroundColor="@color/primary"
@@ -98,14 +101,14 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
+        android:id="@+id/EM"
         android:layout_width="100dp"
         android:layout_height="135dp"
-        android:rotation="-19"
+        android:rotation="-20"
         app:cardBackgroundColor="@color/primary"
         app:cardCornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/cardView2"
+        app:layout_constraintEnd_toStartOf="@+id/AR"
         app:layout_constraintHorizontal_bias="0.14"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/my_name"
@@ -154,10 +157,10 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cardView2"
+        android:id="@+id/AR"
         android:layout_width="100dp"
         android:layout_height="135dp"
-        android:rotation="23"
+        android:rotation="20"
         app:cardBackgroundColor="@color/primary"
         app:cardCornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
