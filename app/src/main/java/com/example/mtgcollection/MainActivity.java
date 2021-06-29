@@ -2,10 +2,7 @@ package com.example.mtgcollection;
 
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,8 +15,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.example.mtgcollection.data.Card;
 import com.example.mtgcollection.data.RoomDB;
 import com.example.mtgcollection.data.SharedPrefManager;
-import com.example.mtgcollection.data.User;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.destination_cards);
         logOutBtn = findViewById(R.id.logoutBtn);
         recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(gridLayoutManager);
