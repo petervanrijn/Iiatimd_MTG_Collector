@@ -36,20 +36,17 @@ public class MainActivity extends AppCompatActivity {
     GridLayoutManager gridLayoutManager;
     RoomDB database;
     CardAdapter adapter;
-    ImageView cardImg;
-    TextView cardName;
     Button logOutBtn;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        recyclerView.setLayoutManager(gridLayoutManager);
-//        recyclerView.hasFixedSize();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         logOutBtn = findViewById(R.id.logoutBtn);
         recyclerView = findViewById(R.id.recyclerview);
-
+        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.hasFixedSize();
         //intitialize database
         database = RoomDB.getInstance(this);
         //store database value in data list
@@ -59,10 +56,10 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.hasFixedSize();
+        //get user AuthToken
         String tokenId = SharedPrefManager.getInstance(this).getUser().getToken();
         CardRequest(tokenId);
 
-//        User user = SharedPrefManager.getInstance(this).getUser();
         logOutBtn.setOnClickListener(v -> {
             finish();
             logOutRequest(tokenId);
@@ -70,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
 
     public void CardRequest(String Token){
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_CARDS, response -> {
@@ -89,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
                     int toughness = obj.getInt("toughness");
                     String image = obj.getString("image");
                     String set = obj.getString("set");
-
                     Card card = new Card(id, name,generic_mana,type,type_name,power,toughness,image, set);
                     db.cardDao().insert(card);
                 }
