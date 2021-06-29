@@ -93,12 +93,6 @@ public class MainActivity extends AppCompatActivity {
                     Card card = new Card(id, name,generic_mana,type,type_name,power,toughness,image, set);
                     db.cardDao().insert(card);
                 }
-                JSONObject jsonObject = jsonArray.getJSONObject(0);
-                String name = jsonObject.getString("name");
-                String image = jsonObject.getString("image");
-                Picasso.get().load(image).into(cardImg);
-                cardName.setText(name);
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
