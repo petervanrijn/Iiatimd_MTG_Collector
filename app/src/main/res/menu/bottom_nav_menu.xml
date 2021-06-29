@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/testDestinationHome"
+        android:icon="@drawable/ic_account_nav_icon"
+        android:title="@string/title_account" />
+    <item
+        android:id="@+id/testDestinationFriends"
+        android:icon="@drawable/ic_friends_nav_icon"
+        android:title="@string/title_friends" />
+    <item
+        android:id="@+id/testDestinationCards"
+        android:icon="@drawable/ic_account_nav_icon"
+        android:title="@string/title_cards" />
+    <item
+        android:id="@+id/testDestinationTrade"
+        android:icon="@drawable/ic_friends_nav_icon"
+        android:title="@string/title_trade" />
+</menu>

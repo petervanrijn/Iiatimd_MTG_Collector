@@ -9,4 +9,22 @@
     <string name="repeat_password">Repeat password</string>
     <string name="back_to_login">Back to Login</string>
     <!-- Strings related to login -->
+
+    <!-- Strings related to homepage -->
+    <string name="my_profile">My profile</string>
+    <string name="my_name">Test Naam</string>
+    <string name="my_user">TestUser123</string>
+    <string name="all_cards">All cards</string>
+    <string name="EM">Eldritch Moon</string>
+    <string name="AR">Aether Revolt</string>
+    <string name="collected">collected</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Strings related to navigation -->
+    <string name="title_account">Account</string>
+    <string name="title_friends">Friends</string>
+    <string name="title_cards">Cards</string>
+    <string name="title_trade">Trade</string>
 </resources>
