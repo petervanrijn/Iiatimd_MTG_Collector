@@ -32,30 +32,35 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter mAdapter;
-    ImageView cardImg;
-    TextView cardName;
-    Button logOutBtn;
-
     List<Card> cardData = new ArrayList<>();
-    GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2 ,GridLayoutManager.VERTICAL, false);
+    GridLayoutManager gridLayoutManager;
     RoomDB database;
     CardAdapter adapter;
+    Button logOutBtn;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        recyclerView.setLayoutManager(gridLayoutManager);
-//        recyclerView.hasFixedSize();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        cardName = findViewById(R.id.CardName);
-        cardImg = findViewById(R.id.CardImg);
         logOutBtn = findViewById(R.id.logoutBtn);
+        recyclerView = findViewById(R.id.recyclerview);
+
+        //intitialize database
+        database = RoomDB.getInstance(this);
+        //store database value in data list
+        cardData = database.cardDao().getAllCards();
+        gridLayoutManager = new GridLayoutManager(this, 2 ,GridLayoutManager.VERTICAL, false);
+        adapter = new CardAdapter(MainActivity.this, cardData);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.hasFixedSize();
         String tokenId = SharedPrefManager.getInstance(this).getUser().getToken();
         CardRequest(tokenId);
-        User user = SharedPrefManager.getInstance(this).getUser();
-        Log.d("token", String.valueOf(user));
+
+//        User user = SharedPrefManager.getInstance(this).getUser();
+
 
         logOutBtn.setOnClickListener(v -> {
             finish();
@@ -69,11 +74,12 @@ public class MainActivity extends AppCompatActivity {
     public void CardRequest(String Token){
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_CARDS, response -> {
             try {
+                RoomDB db = RoomDB.getInstance(this);
                 JSONArray jsonArray = new JSONArray(response);
                 // for loop voor alle kaarten
                 for (int i = 0; i < jsonArray.length(); i++){
                     JSONObject obj = jsonArray.getJSONObject(i);
-                    String id = obj.getString("id");
+                    int id = obj.getInt("id");
                     String name = obj.getString("name");
                     String generic_mana = obj.getString("generic_mana");
                     String type = obj.getString("type");
@@ -82,14 +88,9 @@ public class MainActivity extends AppCompatActivity {
                     int toughness = obj.getInt("toughness");
                     String image = obj.getString("image");
                     String set = obj.getString("set");
-                    Log.d("card", String.valueOf(obj));
+                    Card card = new Card(id, name,generic_mana,type,type_name,power,toughness,image, set);
+                    db.cardDao().insert(card);
                 }
-
-                JSONObject jsonObject = jsonArray.getJSONObject(0);
-                String name = jsonObject.getString("name");
-                String image = jsonObject.getString("image");
-                Picasso.get().load(image).into(cardImg);
-                cardName.setText(name);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -127,4 +128,5 @@ public class MainActivity extends AppCompatActivity {
         };
         MySingleton.getInstance(MainActivity.this).addToRequestQueue(sr);
     }
+
 }

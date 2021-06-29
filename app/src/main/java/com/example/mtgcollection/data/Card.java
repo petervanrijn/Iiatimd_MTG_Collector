@@ -2,6 +2,7 @@ package com.example.mtgcollection.data;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
@@ -10,7 +11,7 @@ import java.io.Serializable;
     public class Card implements Serializable {
     //primary key
     @PrimaryKey(autoGenerate = true)
-    private int Id;
+    private int id;
 
     //create columns
     @ColumnInfo(name = "name")
@@ -30,13 +31,30 @@ import java.io.Serializable;
     @ColumnInfo(name = "set")
     private String set;
 
+
+    public Card(int id,String name, String generic_mana, String type, String type_name, int power,int toughness,String image, String set){
+        this.id = id;
+        this.name = name;
+        this.generic_mana = generic_mana;
+        this.type = type;
+        this.type_name = type_name;
+        this.power = power;
+        this.toughness = toughness;
+        this.image = image;
+        this.set = set;
+    }
+    @Ignore
+    public Card() {
+
+    }
+
     // create the getters
     public void setId(int id) {
-        this.Id = id;
+        this.id = id;
     }
 
     public int getId(){
-        return Id;
+        return id;
     }
 
     public String getName() {
@@ -102,5 +120,6 @@ import java.io.Serializable;
     public void setSet(String set) {
         this.set = set;
     }
+
 }
 
