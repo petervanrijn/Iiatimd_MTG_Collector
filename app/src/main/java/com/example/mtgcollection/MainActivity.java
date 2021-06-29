@@ -30,20 +30,9 @@ public class MainActivity extends AppCompatActivity {
 
         //Navigatiebalk
         BottomNavigationView navView = findViewById(R.id.bottomNavigationView);
-        NavController navController = findNavController(this, R.id.fragmentContainerView);
+        NavController navController = Navigation.findNavController(this, R.id.navigationFragment);
 
-
-        navView.setupWithNavController(navController);
-
-//        BottomNavigationView navView = findViewById(R.id.navigation_bottom);
-
-//        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-//                R.id.testDestinationHome, R.id.testDestinationFriends, R.id.testDestinationCards, R.id.testDestinationTrade )
-//                .build();
-
-//        NavController navController = Navigation.findNavController(this, R.id.navHostFragment);
-//        NavigationUI.setupActionBarWithNavController(this, navController);
-//        NavigationUI.setupWithNavController(navView, navController);
+        NavigationUI.setupWithNavController(navView, navController);
 
 
 //        cardName = findViewById(R.id.CardName);
