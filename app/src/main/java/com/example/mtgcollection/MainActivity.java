@@ -14,27 +14,35 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import static androidx.navigation.Navigation.findNavController;
+
 public class MainActivity extends AppCompatActivity {
-    ImageView cardImg;
-    TextView cardName;
-    Button logOutBtn;
+//    ImageView cardImg;
+//    TextView cardName;
+//    Button logOutBtn;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_navigation);
 
         //Navigatiebalk
-        BottomNavigationView navView = findViewById(R.id.navigation_bottom);
+        BottomNavigationView navView = findViewById(R.id.bottomNavigationView);
+        NavController navController = findNavController(this, R.id.fragmentContainerView);
 
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_account, R.id.navigation_friends, R.id.navigation_cards, R.id.navigation_trade )
-                .build();
+
+        navView.setupWithNavController(navController);
+
+//        BottomNavigationView navView = findViewById(R.id.navigation_bottom);
+
+//        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+//                R.id.testDestinationHome, R.id.testDestinationFriends, R.id.testDestinationCards, R.id.testDestinationTrade )
+//                .build();
 
 //        NavController navController = Navigation.findNavController(this, R.id.navHostFragment);
-//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+//        NavigationUI.setupActionBarWithNavController(this, navController);
 //        NavigationUI.setupWithNavController(navView, navController);
 
 

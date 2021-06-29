@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_main"
+    app:startDestination="@id/testDestinationHome">
+
+    <fragment
+        android:id="@+id/testDestinationHome"
+        android:name="com.example.mtgcollection.TestDestinationHome"
+        android:label="fragment_test_destination_home"
+        tools:layout="@layout/fragment_test_destination_home" />
+    <fragment
+        android:id="@+id/testDestinationFriends"
+        android:name="com.example.mtgcollection.TestDestinationFriends"
+        android:label="fragment_test_destination_friends"
+        tools:layout="@layout/fragment_test_destination_friends" />
+    <fragment
+        android:id="@+id/testDestinationCards"
+        android:name="com.example.mtgcollection.TestDestinationCards"
+        android:label="fragment_test_destination_cards"
+        tools:layout="@layout/fragment_test_destination_cards" />
+    <fragment
+        android:id="@+id/testDestinationTrade"
+        android:name="com.example.mtgcollection.TestDestinationTrade"
+        android:label="fragment_test_destination_trade"
+        tools:layout="@layout/fragment_test_destination_trade" />
+</navigation>
