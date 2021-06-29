@@ -9,7 +9,7 @@
         android:icon="@drawable/ic_friends_nav_icon"
         android:title="@string/title_friends" />
     <item
-        android:id="@+id/testDestinationCards"
+        android:id="@+id/destinationCards"
         android:icon="@drawable/ic_account_nav_icon"
         android:title="@string/title_cards" />
     <item
