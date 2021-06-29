@@ -1,8 +1,10 @@
 package com.example.mtgcollection.data;
 
 public class User {
-    private int id;
-    private String username, email ,token;
+    private final int id;
+    private final String username;
+    private final String email;
+    private final String token;
 
     public User(int id, String username, String email, String token) {
         this.id = id;
