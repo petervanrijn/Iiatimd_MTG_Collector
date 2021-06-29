@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:text="@string/my_user"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/AllCards"
+        app:layout_constraintBottom_toTopOf="@+id/AllCard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,10 +47,11 @@
         app:layout_constraintVertical_bias="0.491" />
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/AllCards"
+        android:id="@+id/AllCard"
         android:layout_width="110dp"
         android:layout_height="150dp"
-        app:cardBackgroundColor="@color/primary"
+
+
         app:cardCornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +62,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@drawable/custom_input">
 
             <TextView
                 android:id="@+id/textView4"
