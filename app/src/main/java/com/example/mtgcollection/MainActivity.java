@@ -36,12 +36,15 @@ public class MainActivity extends AppCompatActivity {
     GridLayoutManager gridLayoutManager;
     RoomDB database;
     CardAdapter adapter;
+    ImageView cardImg;
+    TextView cardName;
     Button logOutBtn;
-
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+//        recyclerView.setLayoutManager(gridLayoutManager);
+//        recyclerView.hasFixedSize();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         logOutBtn = findViewById(R.id.logoutBtn);
@@ -60,8 +63,6 @@ public class MainActivity extends AppCompatActivity {
         CardRequest(tokenId);
 
 //        User user = SharedPrefManager.getInstance(this).getUser();
-
-
         logOutBtn.setOnClickListener(v -> {
             finish();
             logOutRequest(tokenId);
@@ -88,9 +89,16 @@ public class MainActivity extends AppCompatActivity {
                     int toughness = obj.getInt("toughness");
                     String image = obj.getString("image");
                     String set = obj.getString("set");
+
                     Card card = new Card(id, name,generic_mana,type,type_name,power,toughness,image, set);
                     db.cardDao().insert(card);
                 }
+                JSONObject jsonObject = jsonArray.getJSONObject(0);
+                String name = jsonObject.getString("name");
+                String image = jsonObject.getString("image");
+                Picasso.get().load(image).into(cardImg);
+                cardName.setText(name);
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }

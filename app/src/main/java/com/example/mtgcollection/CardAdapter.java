@@ -4,15 +4,19 @@ import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import android.widget.ImageView;
 import android.widget.TextView;
+
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mtgcollection.data.Card;
 import com.example.mtgcollection.data.RoomDB;
+
 import com.squareup.picasso.Picasso;
+
 
 import org.jetbrains.annotations.NotNull;
 
@@ -24,7 +28,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
     private Activity context;
     private RoomDB database;
 
+
     //create constructor
+
     public CardAdapter(Activity context,List<Card> dataList){
         this.context = context;
         this.dataList = dataList;
@@ -41,6 +47,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
+
         //initialze main database
         Card data = dataList.get(position);
         //intialize database
@@ -50,6 +57,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         //set image on image view
         Picasso.get().load(data.getImage()).into(holder.card);
         // hieronder moet code komen om te editen dat de kaart in je bezit is.
+
     }
 
     @Override
@@ -61,7 +69,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         //Initialize variable
         TextView textView;
         ImageView card;
-        public ViewHolder(@NonNull View itemView){
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
             textView = itemView.findViewById(R.id.card_text_view);
             card = itemView.findViewById(R.id.card_image_view);
