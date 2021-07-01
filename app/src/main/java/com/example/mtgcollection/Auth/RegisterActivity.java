@@ -102,12 +102,12 @@ public class RegisterActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.GONE);
                 try {
                     JSONObject obj = new JSONObject(response);
-
                     //no error in response
                     if (obj.getString("code").equals("reg_success")){
                         Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_SHORT).show();
                         //get the user from the response
                         JSONObject userJson = obj.getJSONObject("user");
+                        Log.d("userrr", String.valueOf(userJson));
                         //create a new user object
                         //mss token ook toevoegen in de user
                         User user = new User(
@@ -117,11 +117,9 @@ public class RegisterActivity extends AppCompatActivity {
                                 userJson.getString("email"),
                                 userJson.getString("token")
                         );
-                        Log.d("user", String.valueOf(user));
-
+                        Log.d("userrr", String.valueOf(user));
                         //storing the user and token in shared preference
                         SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
-
                         //starting the profile
                         Toast.makeText(RegisterActivity.this, "Registration complete", Toast.LENGTH_LONG).show();
                         Intent i = new Intent(RegisterActivity.this, MainActivity.class);

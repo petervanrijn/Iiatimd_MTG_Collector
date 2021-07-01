@@ -32,7 +32,7 @@ public interface CardDao {
     public void nukeTable();
 
     //get all data
-    @Query("SELECT * FROM table_card WHERE user_email LIKE :user_email AND inPossession ORDER BY id ASC")
+    @Query("SELECT * FROM table_card WHERE user_email LIKE :user_email  ORDER BY id ASC")
     List<Card> getAllCards(String user_email);
 
     //get all data that is in possession

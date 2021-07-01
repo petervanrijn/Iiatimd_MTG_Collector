@@ -53,10 +53,43 @@ public class Cards extends Fragment {
         //intitialize database
         database = RoomDB.getInstance(getContext());
         //store database value in data list
-//        cardData = database.cardDao().getAllCards(user.getEmail());
-        cardData = database.cardDao().getAll();
+       cardData = database.cardDao().getAllCards(user.getEmail());
+//       cardData = database.cardDao().getAll();
+        String tokenId = SharedPrefManager.getInstance(getActivity()).getUser().getToken();
+        CardRequest(tokenId);
+    }
 
+    public void logOutRequest(String Token) {
+        StringRequest sr = new StringRequest(Request.Method.POST, URLs.URL_LOGOUT, response -> {
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                String name = jsonObject.getString("message");
+                Toast.makeText(getActivity(), name, Toast.LENGTH_SHORT).show();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }, error -> {
 
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + Token);
+                return params;
+            }
+        };
+        MySingleton.getInstance(getActivity()).addToRequestQueue(sr);
+    }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.destination_cards, container, false);
+        recyclerView = view.findViewById(R.id.recyclerview);
+        gridLayoutManager = new GridLayoutManager(getContext(), 2 ,GridLayoutManager.VERTICAL, false);
+        adapter = new CardAdapter(getActivity(), cardData);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.hasFixedSize();
+        return view;
     }
     public void CardRequest(String Token){
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_CARDS, response -> {
@@ -94,39 +127,5 @@ public class Cards extends Fragment {
             }
         };
         MySingleton.getInstance(getActivity()).addToRequestQueue(stringRequest);
-    }
-    public void logOutRequest(String Token) {
-        StringRequest sr = new StringRequest(Request.Method.POST, URLs.URL_LOGOUT, response -> {
-            try {
-                JSONObject jsonObject = new JSONObject(response);
-                String name = jsonObject.getString("message");
-                Toast.makeText(getActivity(), name, Toast.LENGTH_SHORT).show();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }, error -> {
-
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("Authorization", "Bearer " + Token);
-                return params;
-            }
-        };
-        MySingleton.getInstance(getActivity()).addToRequestQueue(sr);
-    }
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.destination_cards, container, false);
-        recyclerView = view.findViewById(R.id.recyclerview);
-        gridLayoutManager = new GridLayoutManager(getContext(), 2 ,GridLayoutManager.VERTICAL, false);
-        adapter = new CardAdapter(getActivity(), cardData);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.hasFixedSize();
-        String tokenId = SharedPrefManager.getInstance(getActivity()).getUser().getToken();
-        CardRequest(tokenId);
-        return view;
     }
 }

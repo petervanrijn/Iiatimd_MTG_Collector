@@ -100,8 +100,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     );
                     //storing the user in shared preferences
                     SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
-
-
                     Intent i = new Intent(LoginActivity.this, MainActivity.class);
                     finish();
                     startActivity(i);

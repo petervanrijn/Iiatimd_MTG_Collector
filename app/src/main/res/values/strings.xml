@@ -28,4 +28,5 @@
     <string name="title_cards">Cards</string>
     <string name="title_trade">Trade</string>
     <string name="card">Card</string>
+    <string name="logout">Logout</string>
 </resources>
