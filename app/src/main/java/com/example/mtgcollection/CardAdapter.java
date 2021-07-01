@@ -52,8 +52,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         Card data = dataList.get(position);
         //intialize database
         database = RoomDB.getInstance(context);
-        //set text on text view
-        holder.textView.setText(data.getName());
         //set image on image view
         Picasso.get().load(data.getImage()).into(holder.card);
         // hieronder moet code komen om te editen dat de kaart in je bezit is.
@@ -67,11 +65,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         //Initialize variable
-        TextView textView;
         ImageView card;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.card_text_view);
             card = itemView.findViewById(R.id.card_image_view);
         }
     }

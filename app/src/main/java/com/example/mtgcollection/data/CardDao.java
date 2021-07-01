@@ -13,7 +13,6 @@ public interface CardDao {
     //Insert query
     @Insert(onConflict = OnConflictStrategy.REPLACE)
 
-
     void insert(Card card);
 
     //Delete query
@@ -33,10 +32,10 @@ public interface CardDao {
     public void nukeTable();
 
     //get all data
-    @Query("SELECT * FROM table_card ORDER BY id ASC")
-    List<Card> getAllCards();
+    @Query("SELECT * FROM table_card WHERE user_email LIKE :user_email AND inPossession ORDER BY id ASC")
+    List<Card> getAllCards(String user_email);
 
-    //get all data
+    //get all data that is in possession
     @Query("SELECT * FROM table_card")
     List<Card> getAll();
 

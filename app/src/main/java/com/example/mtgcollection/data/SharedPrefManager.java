@@ -10,6 +10,7 @@ public class SharedPrefManager {
     //the constants
     private static final String SHARED_PREF_NAME = "Peter van Rijn";
     private static final String KEY_USERNAME = "username";
+    private static final String KEY_NAME = "name";
     private static final String KEY_EMAIL = "email";
     private static final String KEY_ID = "id";
     private static final String KEY_TOKEN = "token";
@@ -36,6 +37,7 @@ public class SharedPrefManager {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(KEY_ID, user.getId());
         editor.putString(KEY_USERNAME, user.getUsername());
+        editor.putString(KEY_NAME, user.getName());
         editor.putString(KEY_EMAIL, user.getEmail());
         editor.putString(KEY_TOKEN, user.getToken());
         editor.apply();
@@ -52,6 +54,7 @@ public class SharedPrefManager {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return new User(
                 sharedPreferences.getInt(KEY_ID, -1),
+                sharedPreferences.getString(KEY_NAME, null),
                 sharedPreferences.getString(KEY_USERNAME, null),
                 sharedPreferences.getString(KEY_EMAIL, null),
                 sharedPreferences.getString(KEY_TOKEN,null)

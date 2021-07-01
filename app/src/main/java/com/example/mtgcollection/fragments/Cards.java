@@ -3,64 +3,130 @@ package com.example.mtgcollection.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.toolbox.StringRequest;
+import com.example.mtgcollection.CardAdapter;
+import com.example.mtgcollection.MainActivity;
+import com.example.mtgcollection.MySingleton;
 import com.example.mtgcollection.R;
+import com.example.mtgcollection.URLs;
+import com.example.mtgcollection.data.Card;
+import com.example.mtgcollection.data.RoomDB;
+import com.example.mtgcollection.data.SharedPrefManager;
+import com.example.mtgcollection.data.User;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Cards#newInstance} factory method to
- * create an instance of this fragment.
- */
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class Cards extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
+    RecyclerView recyclerView;
+    User user = SharedPrefManager.getInstance(getContext()).getUser();
     public Cards() {
         // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TestDestinationCards.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Cards newInstance(String param1, String param2) {
-        Cards fragment = new Cards();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
+    List<Card> cardData = new ArrayList<>();
+    GridLayoutManager gridLayoutManager;
+    RoomDB database;
+    CardAdapter adapter;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+        //intitialize database
+        database = RoomDB.getInstance(getContext());
+        //store database value in data list
+//        cardData = database.cardDao().getAllCards(user.getEmail());
+        cardData = database.cardDao().getAll();
 
+
+    }
+    public void CardRequest(String Token){
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_CARDS, response -> {
+            try {
+                RoomDB db = RoomDB.getInstance(getActivity());
+                JSONArray jsonArray = new JSONArray(response);
+                // for loop voor alle kaarten
+                for (int i = 0; i < jsonArray.length(); i++){
+                    JSONObject obj = jsonArray.getJSONObject(i);
+                    int id = obj.getInt("id");
+                    String name = obj.getString("name");
+                    String generic_mana = obj.getString("generic_mana");
+                    String type = obj.getString("type");
+                    String type_name = obj.getString("type_name");
+                    int power = obj.getInt("power");
+                    int toughness = obj.getInt("toughness");
+                    String image = obj.getString("image");
+                    String set = obj.getString("set");
+                    int inPossession = obj.getInt("inPossession");
+                    Log.d("inPossession", String.valueOf(inPossession));
+                    Card card = new Card(id, name,generic_mana,type, type_name ,power,toughness,image, set, inPossession , user.getEmail());
+                    db.cardDao().insert(card);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }, error -> {
+
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + Token);
+                return params;
+            }
+        };
+        MySingleton.getInstance(getActivity()).addToRequestQueue(stringRequest);
+    }
+    public void logOutRequest(String Token) {
+        StringRequest sr = new StringRequest(Request.Method.POST, URLs.URL_LOGOUT, response -> {
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                String name = jsonObject.getString("message");
+                Toast.makeText(getActivity(), name, Toast.LENGTH_SHORT).show();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }, error -> {
+
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("Authorization", "Bearer " + Token);
+                return params;
+            }
+        };
+        MySingleton.getInstance(getActivity()).addToRequestQueue(sr);
+    }
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.destination_cards, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.destination_cards, container, false);
+        recyclerView = view.findViewById(R.id.recyclerview);
+        gridLayoutManager = new GridLayoutManager(getContext(), 2 ,GridLayoutManager.VERTICAL, false);
+        adapter = new CardAdapter(getActivity(), cardData);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(gridLayoutManager);
+        recyclerView.hasFixedSize();
+        String tokenId = SharedPrefManager.getInstance(getActivity()).getUser().getToken();
+        CardRequest(tokenId);
+        return view;
     }
 }

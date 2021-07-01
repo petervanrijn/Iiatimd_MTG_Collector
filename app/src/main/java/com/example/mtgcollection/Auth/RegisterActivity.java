@@ -113,6 +113,7 @@ public class RegisterActivity extends AppCompatActivity {
                         User user = new User(
                                 userJson.getInt("id"),
                                 userJson.getString("name"),
+                                userJson.getString("username"),
                                 userJson.getString("email"),
                                 userJson.getString("token")
                         );
