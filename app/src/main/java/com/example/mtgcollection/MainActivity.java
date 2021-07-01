@@ -28,6 +28,13 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.bottomNavigationView);
         NavController navController = Navigation.findNavController(this, R.id.navigationFragment);
         NavigationUI.setupWithNavController(navView, navController);
+        //get auth user
+        User user = SharedPrefManager.getInstance(this).getUser();
+        name = findViewById(R.id.my_name);
+        username = findViewById(R.id.my_user);
+        //set in profile text to auth user
+        name.setText(user.getName());
+        username.setText(user.getUsername());
 
     }
 
