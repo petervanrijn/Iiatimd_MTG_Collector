@@ -11,15 +11,15 @@
         android:label="destination_profile"
         tools:layout="@layout/profile_page" />
     <fragment
-        android:id="@+id/testDestinationFriends"
-        android:name="com.example.mtgcollection.fragments.TestDestinationFriends"
-        android:label="fragment_test_destination_friends"
-        tools:layout="@layout/fragment_test_destination_friends" />
-    <fragment
         android:id="@+id/destinationCards"
         android:name="com.example.mtgcollection.fragments.Cards"
         android:label="destination_cards"
         tools:layout="@layout/destination_cards" />
+    <fragment
+        android:id="@+id/testDestinationMycards"
+        android:name="com.example.mtgcollection.fragments.TestDestinationMycards"
+        android:label="fragment_test_destination_friends"
+        tools:layout="@layout/fragment_test_destination_mycards" />
     <fragment
         android:id="@+id/destinationFriends"
         android:name="com.example.mtgcollection.fragments.Friends"
