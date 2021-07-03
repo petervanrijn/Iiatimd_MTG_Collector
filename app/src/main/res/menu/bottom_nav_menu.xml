@@ -12,7 +12,7 @@
         android:title="@string/title_cards" />
 
     <item
-        android:id="@+id/testDestinationTrade"
+        android:id="@+id/destinationCards"
         android:icon="@drawable/ic_saved_card"
         android:title="@string/title_mycards" />
 
