@@ -17,7 +17,7 @@
         android:title="@string/title_mycards" />
 
     <item
-        android:id="@+id/testDestinationFriends"
+        android:id="@+id/destinationFriends"
         android:icon="@drawable/ic_friends_nav_icon"
         android:title="@string/title_friends" />
 </menu>

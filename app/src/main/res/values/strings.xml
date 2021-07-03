@@ -24,14 +24,10 @@
 
     <!-- Strings related to navigation -->
     <string name="title_account">Profile</string>
-    <string name="title_friends">Friends</string>
-<<<<<<< HEAD
     <string name="title_cards">Cards</string>
-    <string name="title_trade">Trade</string>
+    <string name="title_mycards">My cards</string>
+    <string name="title_friends">Friends</string>
     <string name="card">Card</string>
     <string name="logout">Logout</string>
-=======
-    <string name="title_cards">All cards</string>
-    <string name="title_mycards">My cards</string>
->>>>>>> Burak
+
 </resources>

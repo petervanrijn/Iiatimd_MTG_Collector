@@ -21,8 +21,8 @@
         android:label="destination_cards"
         tools:layout="@layout/destination_cards" />
     <fragment
-        android:id="@+id/testDestinationTrade"
-        android:name="com.example.mtgcollection.fragments.TestDestinationTrade"
-        android:label="fragment_test_destination_trade"
-        tools:layout="@layout/fragment_test_destination_trade" />
+        android:id="@+id/destinationFriends"
+        android:name="com.example.mtgcollection.fragments.Friends"
+        android:label="fragment_destination_friends"
+        tools:layout="@layout/fragment_destination_friends" />
 </navigation>
