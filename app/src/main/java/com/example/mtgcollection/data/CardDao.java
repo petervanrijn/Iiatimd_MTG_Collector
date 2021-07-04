@@ -11,8 +11,7 @@ import java.util.List;
 @Dao
 public interface CardDao {
     //Insert query
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Card card);
 
     //Delete query
@@ -31,12 +30,19 @@ public interface CardDao {
     @Query("DELETE FROM table_card")
     public void nukeTable();
 
-    //get all data
-    @Query("SELECT * FROM table_card WHERE user_email LIKE :user_email  ORDER BY id ASC")
-    List<Card> getAllCards(String user_email);
+    //get all card that are in possession
+    @Query("SELECT * FROM table_card WHERE user_email LIKE :user_email AND inPossession = '1' ORDER BY id ASC")
+    List<Card> getAllInpossessionCards(String user_email);
 
     //get all data that is in possession
     @Query("SELECT * FROM table_card")
     List<Card> getAll();
 
+    //update card to in possession
+    @Query("UPDATE table_card SET inPossession = '1' WHERE id LIKE :card_id")
+    public abstract void setInPossession(int card_id);
+
+    //update card to not in possession
+    @Query("UPDATE table_card SET inPossession = '0' WHERE id LIKE :card_id")
+    public abstract void setNotInPossession(int card_id);
 }

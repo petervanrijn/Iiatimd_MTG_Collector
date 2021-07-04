@@ -12,10 +12,10 @@ import com.example.mtgcollection.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link TestDestinationTrade#newInstance} factory method to
+ * Use the {@link MyCards#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TestDestinationTrade extends Fragment {
+public class MyCards extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +26,7 @@ public class TestDestinationTrade extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public TestDestinationTrade() {
+    public MyCards() {
         // Required empty public constructor
     }
 
@@ -39,8 +39,8 @@ public class TestDestinationTrade extends Fragment {
      * @return A new instance of fragment TestDestinationTrade.
      */
     // TODO: Rename and change types and number of parameters
-    public static TestDestinationTrade newInstance(String param1, String param2) {
-        TestDestinationTrade fragment = new TestDestinationTrade();
+    public static MyCards newInstance(String param1, String param2) {
+        MyCards fragment = new MyCards();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

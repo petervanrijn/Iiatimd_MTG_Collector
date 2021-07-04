@@ -1,19 +1,21 @@
-package com.example.mtgcollection;
+package com.example.mtgcollection.data;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mtgcollection.data.Card;
-import com.example.mtgcollection.data.RoomDB;
+import com.example.mtgcollection.R;
 
 import com.squareup.picasso.Picasso;
 
@@ -27,7 +29,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
     private List<Card> dataList;
     private Activity context;
     private RoomDB database;
-
+    private int i = 0;
 
     //create constructor
 
@@ -47,15 +49,33 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull ViewHolder holder, int position) {
-
         //initialze main database
         Card data = dataList.get(position);
         //intialize database
         database = RoomDB.getInstance(context);
         //set image on image view
         Picasso.get().load(data.getImage()).into(holder.card);
-        // hieronder moet code komen om te editen dat de kaart in je bezit is.
+        // checks if card is possession
+        if ( data.getInPossession() == 1){
+            holder.cardFrame.setBackgroundResource(R.drawable.possession_frame);
+        }
+        holder.card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                i = i + 1;
+                Log.d("clicked", String.valueOf(data));
+                //update the database to in possession 1 and the styling
+                if ( i % 2 == 0){
+                    database.cardDao().setInPossession(data.getId());
+                    holder.cardFrame.setBackgroundResource(R.drawable.possession_frame);
+                }else{
+                    database.cardDao().setNotInPossession(data.getId());
+                    holder.cardFrame.setBackgroundResource(R.drawable.frame);
+                }
+                Log.d("itemclick", String.valueOf(data.getInPossession()));
 
+            }
+        });
     }
 
     @Override
@@ -66,9 +86,12 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         //Initialize variable
         ImageView card;
+        TextView cardFrame;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             card = itemView.findViewById(R.id.card_image_view);
+            cardFrame = itemView.findViewById(R.id.card_image_frame);
+
         }
     }
 }

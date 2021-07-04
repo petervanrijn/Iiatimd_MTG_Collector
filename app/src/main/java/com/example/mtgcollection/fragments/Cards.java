@@ -10,16 +10,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
-import com.example.mtgcollection.CardAdapter;
-import com.example.mtgcollection.MainActivity;
+import com.example.mtgcollection.data.CardAdapter;
 import com.example.mtgcollection.MySingleton;
 import com.example.mtgcollection.R;
 import com.example.mtgcollection.URLs;
@@ -53,8 +49,8 @@ public class Cards extends Fragment {
         //intitialize database
         database = RoomDB.getInstance(getContext());
         //store database value in data list
-       cardData = database.cardDao().getAllCards(user.getEmail());
-//       cardData = database.cardDao().getAll();
+//       cardData = database.cardDao().getAllCards(user.getEmail());
+        cardData = database.cardDao().getAll();
         String tokenId = SharedPrefManager.getInstance(getActivity()).getUser().getToken();
         CardRequest(tokenId);
     }

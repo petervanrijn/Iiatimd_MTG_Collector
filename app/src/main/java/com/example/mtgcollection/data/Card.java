@@ -6,12 +6,13 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import java.io.Serializable;
 //create table name
+
 @Entity(tableName = "table_card")
 public class Card implements Serializable {
+
     //primary key
     @PrimaryKey(autoGenerate = true)
     private int id;
-
     //create columns
     @ColumnInfo(name = "name")
     private String name;

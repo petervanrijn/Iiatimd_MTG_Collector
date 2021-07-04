@@ -24,7 +24,7 @@
             android:padding="5dp" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/card_image_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/frame" />
