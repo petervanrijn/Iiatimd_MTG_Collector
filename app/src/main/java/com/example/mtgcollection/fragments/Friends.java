@@ -9,7 +9,8 @@ import android.view.ViewGroup;
 import com.example.mtgcollection.R;
 
 
-public class MyCards extends Fragment {
+
+public class Friends extends Fragment {
 
     public static Friends newInstance(String param1, String param2) {
         Friends fragment = new Friends();
@@ -18,16 +19,13 @@ public class MyCards extends Fragment {
         return fragment;
     }
 
-    public MyCards() {
+    public Friends() {
         // Required empty public constructor
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-        }
     }
 
     @Override

@@ -19,14 +19,15 @@
     <string name="AR">Aether Revolt</string>
     <string name="collected">collected</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Strings related to Friends -->
+    <string name="no_friends">There are no friends in your list yet</string>
 
     <!-- Strings related to navigation -->
-    <string name="title_account">Account</string>
-    <string name="title_friends">Friends</string>
+    <string name="title_account">Profile</string>
     <string name="title_cards">Cards</string>
-    <string name="title_trade">Trade</string>
+    <string name="title_mycards">My cards</string>
+    <string name="title_friends">Friends</string>
     <string name="card">Card</string>
     <string name="logout">Logout</string>
+
 </resources>
