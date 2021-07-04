@@ -35,7 +35,6 @@ import java.util.Map;
 
 public class Cards extends Fragment {
     RecyclerView recyclerView;
-    User user = SharedPrefManager.getInstance(getContext()).getUser();
     public Cards() {
         // Required empty public constructor
     }
@@ -49,10 +48,8 @@ public class Cards extends Fragment {
         //intitialize database
         database = RoomDB.getInstance(getContext());
         //store database value in data list
-//       cardData = database.cardDao().getAllCards(user.getEmail());
         cardData = database.cardDao().getAll();
-        String tokenId = SharedPrefManager.getInstance(getActivity()).getUser().getToken();
-        CardRequest(tokenId);
+
     }
 
     public void logOutRequest(String Token) {
@@ -87,41 +84,5 @@ public class Cards extends Fragment {
         recyclerView.hasFixedSize();
         return view;
     }
-    public void CardRequest(String Token){
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_CARDS, response -> {
-            try {
-                RoomDB db = RoomDB.getInstance(getActivity());
-                JSONArray jsonArray = new JSONArray(response);
-                // for loop voor alle kaarten
-                for (int i = 0; i < jsonArray.length(); i++){
-                    JSONObject obj = jsonArray.getJSONObject(i);
-                    int id = obj.getInt("id");
-                    String name = obj.getString("name");
-                    String generic_mana = obj.getString("generic_mana");
-                    String type = obj.getString("type");
-                    String type_name = obj.getString("type_name");
-                    int power = obj.getInt("power");
-                    int toughness = obj.getInt("toughness");
-                    String image = obj.getString("image");
-                    String set = obj.getString("set");
-                    int inPossession = obj.getInt("inPossession");
-                    Log.d("inPossession", String.valueOf(inPossession));
-                    Card card = new Card(id, name,generic_mana,type, type_name ,power,toughness,image, set, inPossession , user.getEmail());
-                    db.cardDao().insert(card);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }, error -> {
 
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("Authorization", "Bearer " + Token);
-                return params;
-            }
-        };
-        MySingleton.getInstance(getActivity()).addToRequestQueue(stringRequest);
-    }
 }

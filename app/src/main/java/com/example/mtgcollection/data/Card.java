@@ -5,6 +5,7 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import java.io.Serializable;
+import java.util.List;
 //create table name
 
 @Entity(tableName = "table_card")
@@ -28,7 +29,7 @@ public class Card implements Serializable {
     private int toughness;
     @ColumnInfo(name = "image")
     private String image;
-    @ColumnInfo(name = "set")
+    @ColumnInfo(name = "CardSet")
     private String set;
     @ColumnInfo(name = "inPossession")
     private int inPossession;
@@ -134,5 +135,6 @@ public class Card implements Serializable {
         public int getInPossession(){return inPossession;}
 
         public void setInPossession(){this.inPossession = inPossession;}
+
 
     }

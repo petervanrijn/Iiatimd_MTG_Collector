@@ -38,6 +38,17 @@ public interface CardDao {
     @Query("SELECT * FROM table_card")
     List<Card> getAll();
 
+    //get all data that is in possession
+    @Query("SELECT COUNT(id) FROM table_card WHERE inPossession = '1'")
+    int getAllCollected();
+
+    //get all data that is in possession
+    @Query("SELECT COUNT(id)  FROM table_card WHERE inPossession = '1' AND CardSet = 'AetherRevolt'")
+    public abstract int getAetherRevoltCollected();
+
+    @Query("SELECT COUNT(id)  FROM table_card WHERE inPossession = '1' AND CardSet = 'EldritchMoon'")
+    public abstract int getEldritchmoonCollected();
+
     //update card to in possession
     @Query("UPDATE table_card SET inPossession = '1' WHERE id LIKE :card_id")
     public abstract void setInPossession(int card_id);

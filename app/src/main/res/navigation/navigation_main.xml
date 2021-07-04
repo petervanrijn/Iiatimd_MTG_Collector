@@ -16,15 +16,10 @@
         android:label="destination_cards"
         tools:layout="@layout/destination_cards" />
     <fragment
-        android:id="@+id/testDestinationTrade"
+        android:id="@+id/DestinationMyCards"
         android:name="com.example.mtgcollection.fragments.MyCards"
-        android:label="fragment_test_destination_trade"
-        tools:layout="@layout/fragment_test_destination_trade" />
-        android:id="@+id/testDestinationMycards"
-        android:name="com.example.mtgcollection.fragments.TestDestinationMycards"
-        android:label="fragment_test_destination_friends"
-        tools:layout="@layout/fragment_test_destination_mycards" />
-
+        android:label="destination_mycards"
+        tools:layout="@layout/destination_mycards" />
     <fragment
         android:id="@+id/destinationFriends"
         android:name="com.example.mtgcollection.fragments.Friends"

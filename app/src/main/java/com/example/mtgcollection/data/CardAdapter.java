@@ -29,7 +29,9 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
     private List<Card> dataList;
     private Activity context;
     private RoomDB database;
-    private int i = 0;
+    private String clickedItem = "";
+    private String oldClickedItem = "";
+
 
     //create constructor
 
@@ -62,18 +64,21 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                i = i + 1;
-                Log.d("clicked", String.valueOf(data));
+                clickedItem = data.getName();
+                Log.d("clicked", String.valueOf(clickedItem));
+
+
                 //update the database to in possession 1 and the styling
-                if ( i % 2 == 0){
+                if (!clickedItem.equals(oldClickedItem)){
+                    oldClickedItem = clickedItem;
                     database.cardDao().setInPossession(data.getId());
                     holder.cardFrame.setBackgroundResource(R.drawable.possession_frame);
-                }else{
+                }else if(clickedItem.equals(oldClickedItem) ) {
+                    oldClickedItem = "";
                     database.cardDao().setNotInPossession(data.getId());
                     holder.cardFrame.setBackgroundResource(R.drawable.frame);
                 }
                 Log.d("itemclick", String.valueOf(data.getInPossession()));
-
             }
         });
     }
