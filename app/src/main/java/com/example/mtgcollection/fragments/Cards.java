@@ -82,6 +82,8 @@ public class Cards extends Fragment {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.hasFixedSize();
+        recyclerView.getLayoutManager().removeAllViews();
+        adapter.notifyDataSetChanged();
         return view;
     }
 

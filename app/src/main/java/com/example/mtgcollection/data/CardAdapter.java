@@ -9,14 +9,18 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mtgcollection.Auth.RegisterActivity;
+import com.example.mtgcollection.MainActivity;
 import com.example.mtgcollection.R;
 
+import com.example.mtgcollection.fragments.Cards;
 import com.squareup.picasso.Picasso;
 
 
@@ -59,22 +63,22 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         Picasso.get().load(data.getImage()).into(holder.card);
         // checks if card is possession
         if ( data.getInPossession() == 1){
-            holder.cardFrame.setBackgroundResource(R.drawable.possession_frame);
+            holder.cardFrame.setBackgroundResource(R.drawable.frame);
         }
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 clickedItem = data.getName();
                 Log.d("clicked", String.valueOf(clickedItem));
-
-
                 //update the database to in possession 1 and the styling
                 if (!clickedItem.equals(oldClickedItem)){
                     oldClickedItem = clickedItem;
                     database.cardDao().setInPossession(data.getId());
                     holder.cardFrame.setBackgroundResource(R.drawable.possession_frame);
-                }else if(clickedItem.equals(oldClickedItem) ) {
+                    Toast.makeText(context, clickedItem  + "is added to my Cards.", Toast.LENGTH_SHORT).show();
+                }else {
                     oldClickedItem = "";
+                    Toast.makeText(context, clickedItem  + "Has been removed from my Cards.", Toast.LENGTH_SHORT).show();
                     database.cardDao().setNotInPossession(data.getId());
                     holder.cardFrame.setBackgroundResource(R.drawable.frame);
                 }
@@ -94,9 +98,10 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> {
         TextView cardFrame;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            itemView.setClickable(true);
+            itemView.setFocusableInTouchMode(true);
             card = itemView.findViewById(R.id.card_image_view);
             cardFrame = itemView.findViewById(R.id.card_image_frame);
-
         }
     }
 }

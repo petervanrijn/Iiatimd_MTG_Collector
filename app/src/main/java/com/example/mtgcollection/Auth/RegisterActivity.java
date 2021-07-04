@@ -53,7 +53,13 @@ public class RegisterActivity extends AppCompatActivity {
         Password = findViewById(R.id.passwordField);
         ConPassword = findViewById(R.id.repeatPasswordField);
 
-        findViewById(R.id.register).setOnClickListener(new View.OnClickListener() {
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //if user pressed on back button
+                finish();
+            }
+        });register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //if user pressed on button register
@@ -61,6 +67,7 @@ public class RegisterActivity extends AppCompatActivity {
                 registerUser();
             }
         });
+
     }
 
     private void registerUser(){

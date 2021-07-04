@@ -69,6 +69,8 @@ public class Profile extends Fragment {
         User user = SharedPrefManager.getInstance(getContext()).getUser();
         name.setText(user.getName());
         username.setText(user.getUsername());
+
+        Log.d("user", String.valueOf(user.getName()));
         allCards.setText(database.cardDao().getAllCollected()+ "/392");
         eldritchMoon.setText(database.cardDao().getEldritchmoonCollected() + "/208");
         aetherRevolt.setText(database.cardDao().getAetherRevoltCollected() + "/184");
